@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+    <title>Categories</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+
+
+    <div class="content-wrapper">
+    <%- include('controlPanel') %>
+        <div class="categories-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% data.forEach((category) => { %>
+                    <tr>
+                        <td>
+                            <%= category.name %>
+                        </td>
+
+                        <td>
+                            <%= category.description || "Description" %>
+                        </td>
+
+                        <td>
+                            <i class="mdi mdi-pencil table-ctrl-icon icon-edit" title="Edit">
+                                <button type="button" command="show-modal" commandfor="edit-category-modal-<%= category.id %>" class="table-ctrl-btn"></button>
+                            </i>
+
+                            <%- include('modalEditCategory', { data: category }) %>
+                        </td>
+
+                        <td>
+                            <form action="/categories/delete" method="post">
+                                <input type="hidden" value="<%= category.id %>" name="id">
+
+                                <i class="mdi mdi-delete table-ctrl-icon icon-delete" title="Delete">
+                                    <button type="submit" class="table-ctrl-btn"></button>
+                                </i>
+                            </form>
+                        </td>
+                    </tr>
+                <% });%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+
+    <script src="js/categories/controlPanel.js"></script>
+</body>
+</html>

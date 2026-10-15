@@ -1,0 +1,35 @@
+<dialog id="edit-category-modal-<%= data.id %>" class="modal-form">
+    <h2>Edit category</h2>
+
+    <form method="post" action="/categories/edit" id="form-edit-category">
+        <% if (locals. error) { %>
+            <p class="form-error"><%= error %></p>
+        <% } %>
+
+        <input type="hidden" value="<%= data.id %>" name="id">
+
+        <div class="input-block">
+            <label for="category-name">Name</label>
+            <input type="text" name="name" id="category-name" required
+                   value="<%= locals.formData ? formData.name : data.name %>">
+        </div>
+
+        <div class="input-block">
+            <label for="category-description">Description</label>
+            <input type="text" name="description" id="category-description"
+                   value="<%= locals.formData ? formData.description : data.description %>">
+        </div>
+
+        <div class="modal-btn-block">
+            <button type="submit" id="btn-edit" class="modal-btn-edit">Edit</button>
+            <button type="button" id="modal-btn-close-edit-category" class="modal-btn-close" command="close"
+                    commandfor="edit-category-modal-<%= data.id %>">Close</button>
+        </div>
+    </form>
+
+    <% if (locals.openEditModal) { %>
+        <script>
+            document.getElementById("edit-category-modal-<%= data.id %>").showModal();
+        </script>
+    <% } %>
+</dialog>

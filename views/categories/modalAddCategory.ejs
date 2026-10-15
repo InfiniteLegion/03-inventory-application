@@ -1,0 +1,33 @@
+<dialog id="add-category-dialog" class="modal-form">
+    <h2>Add category</h2>
+
+    <form method="post" action="/categories/new" id="form-add-category">
+        <% if (locals.error) { %>
+            <p class="form-error"><%= error %></p>
+        <% } %>
+
+        <div class="input-block">
+            <label for="category-name">Name</label>
+            <input type="text" name="name" id="category-name" required
+                value="<%= locals.formData ? formData.name : '' %>">
+        </div>
+
+        <div class="input-block">
+            <label for="category-description">Description</label>
+            <input type="text" name="description" id="category-description"
+                value="<%= locals.formData ? formData.description : '' %>">
+        </div>
+
+        <div class="modal-btn-block">
+            <button type="submit" id="btn-add" class="modal-btn-add">Add</button>
+            <button type="button" id="modal-btn-close-add-category" class="modal-btn-close" command="close"
+                    commandfor="add-category-dialog">Close</button>
+        </div>
+    </form>
+
+    <% if (locals.openAddModal) { %>
+        <script>
+            document.getElementById("add-category-dialog").showModal();
+        </script>
+    <% } %>
+</dialog>
