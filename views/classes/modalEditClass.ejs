@@ -1,0 +1,35 @@
+<dialog id="edit-class-modal-<%= data.id %>" class="modal-form">
+    <h2>Edit class</h2>
+
+    <form action="/classes/edit" method="post" id="form-edit-class">
+        <% if (locals.error) { %>
+            <p class="form-error"><%= error %></p>
+        <% } %>
+
+        <input type="hidden" value="<%= data.id %>" name="id">
+
+        <div class="input-block">
+            <label for="class-name">Name</label>
+            <input type="text" name="name" id="class-name" required
+                value="<%= locals.formData ? formData.name : data.name%>">
+        </div>
+
+        <div class="input-block">
+            <label for="class-description">Description</label>
+            <input type="text" name="description" id="class-description"
+                value="<%= locals.formData ? formData.description : data.description%>">
+        </div>
+
+        <div class="modal-btn-block">
+            <button type="submit" id="btn-edit" class="modal-btn-edit">Edit</button>
+            <button type="button" id="modal-btn-close-edit-class" class="modal-btn-close" command="close"
+                    commandfor="edit-class-modal-<%= data.id %>">Close</button>
+        </div>
+    </form>
+
+    <% if (locals.openEditModal) { %>
+        <script>
+            document.getElementById("edit-class-modal-<%= data.id %>").showModal();
+        </script>
+    <% } %>
+</dialog>

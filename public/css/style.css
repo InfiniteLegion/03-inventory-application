@@ -204,6 +204,13 @@ tbody tr:nth-child(odd) {
   padding-top: 50px;
 }
 
+/* classes */
+
+.classes-wrapper {
+  width: 100%;
+  padding-top: 50px;
+}
+
 footer {
   width: 100%;
   padding: 10px;

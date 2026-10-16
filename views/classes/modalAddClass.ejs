@@ -1,0 +1,33 @@
+<dialog id="add-class-dialog" class="modal-form">
+    <h2>Add class</h2>
+
+    <form action="/classes/new" method="post" id="form-add-class">
+        <% if (locals.error) { %>
+            <p class="form-error"><%= error %></p>
+        <% } %>
+
+        <div class="input-block">
+            <label for="class-name">Name</label>
+            <input type="text" name="name" id="class-name" required
+                value="<%= locals.formData ? formData.name : '' %>">
+        </div>
+
+        <div class="input-block">
+            <label for="class-description">Description</label>
+            <input type="text" name="description" id="class-description"
+                value="<%= locals.formData ? formData.description : ''%>">
+        </div>
+
+        <div class="modal-btn-block">
+            <button type="submit" id="btn-add" class="modal-btn-add">Add</button>
+            <button type="button" id="modal-btn-close-add-class" class="modal-btn-close" command="close"
+                    commandfor="add-class-dialog">Close</button>
+        </div>
+    </form>
+
+    <% if (locals.openAddModal) { %>
+        <script>
+            document.getElementById("add-class-dialog").showModal();
+        </script>
+    <% } %>
+</dialog>
