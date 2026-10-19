@@ -1,0 +1,36 @@
+<div class="item">
+    <p class="item-title">
+        <%= item.name %>
+
+        <span class="item-category">
+            (<%= item.category.name %>)
+        </span>
+    </p>
+
+
+    <% if (item.description) { %>
+        <p class="item-description">
+            <%= item.description %>
+        </p>
+    <% } %>
+
+    <p class="item-price">
+        <%= item.price %> G
+    </p>
+
+    <p class="item-quantity">
+        <%= item.quantity > 0 ? `${item.quantity} left` : "Out of stock" %>
+    </p>
+
+    <p class="item-rarity rarity-<%= item.rarity %>">
+        <%= item.rarity %>
+    </p>
+
+    <div class="item-classes">
+        <% item.classes.forEach((c) => { %>
+            <span class="item-class <%= c.name %>">
+                <%= c.name %>
+            </span>
+        <% }); %>
+    </div>
+</div>

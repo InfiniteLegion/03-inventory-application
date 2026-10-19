@@ -1,0 +1,91 @@
+<% const rarityArr = ['common', 'uncommon', 'rare', 'epic', 'legendary']; %>
+<% const selectedClasses = locals.formData && formData.classes ? [].concat(formData.classes).map(String) : []; %>
+
+<dialog class="modal-form" id="add-item-dialog">
+    <h2>Add item</h2>
+
+    <form action="/items/new" method="post" id="form-add-item">
+        <% if (locals.error) { %>
+            <p class="form-error"><%= error %></p>
+        <% } %>
+
+        <div class="input-block">
+            <label for="item-name">Name</label>
+            <input type="text" name="name" id="item-name" required
+                value="<%= locals.formData ? formData.name : ''%>">
+            <p class="input-error hidden" id="error-name"></p>
+        </div>
+
+        <div class="input-block">
+            <label for="item-category">Category</label>
+            <select name="category_id" id="item-category">
+                <% categories.forEach((category) => { %>
+                    <option value="<%= category.id %>"
+                        <%= locals.formData && Number(formData.category_id) === Number(category.id) ? 'selected' : '' %>>
+                        <%= category.name %>
+                    </option>
+                <% }); %>
+            </select>
+            <p class="input-error hidden" id="error-category"></p>
+        </div>
+
+        <div class="input-block">
+            <label for="item-price">Price</label>
+            <input type="number" name="price" min="0" id="item-price"
+                value="<%= locals.formData ? formData.price : 0 %>">
+            <p class="input-error hidden" id="error-price"></p>
+        </div>
+
+        <div class="input-block">
+            <label for="item-quantity">Quantity</label>
+            <input type="number" name="quantity" id="item-quantity" min="0"
+                value="<%= locals.formData ? formData.quantity : 0 %>">
+            <p class="input-error hidden" id="error-quantity"></p>
+        </div>
+
+        <div class="input-block">
+            <label for="item-rarity">Rarity</label>
+            <select name="rarity" id="item-rarity">
+                <% rarityArr.forEach((r) => { %>
+                    <option value="<%= r %>"
+                        <%= locals.formData && formData.rarity === r ? 'selected' : '' %>>
+                        <%= r %>
+                    </option>
+                <% }); %>
+            </select>
+            <p class="input-error hidden" id="error-rarity"></p>
+        </div>
+
+        <div class="input-block">
+            <div class="checkbox-block">
+                <% classes.forEach((c) => { %>
+                    <div class="item-checkbox">
+                        <input type="checkbox" name="classes" id="item-class-<%= c.id %>" value="<%= c.id %>"
+                            <%= selectedClasses.includes(String(c.id)) ? 'checked' : '' %>>
+                        <label for="item-class-<%= c.id %>"><%= c.name %></label>
+                    </div>
+                <% }); %>
+            </div>
+            <p class="input-error hidden" id="error-classes"></p>
+        </div>
+
+        <div class="input-block">
+            <label for="item-description">Description</label>
+            <input type="text" name="description" id="item-description"
+                value="<%= locals.formData ? formData.description : '' %>">
+            <p class="input-error hidden" id="error-description"></p>
+        </div>
+
+        <div class="modal-btn-block">
+            <button type="submit" class="modal-btn-add" id="btn-add">Add</button>
+            <button id="modal-btn-close-add-item" class="modal-btn-close" type="button" command="close"
+                    commandfor="add-item-dialog">Close</button>
+        </div>
+    </form>
+
+    <% if (locals.openAddModal) { %>
+        <script>
+            document.getElementById("add-item-dialog").showModal();
+        </script>
+    <% } %>
+</dialog>

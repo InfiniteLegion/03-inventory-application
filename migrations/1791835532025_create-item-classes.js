@@ -16,11 +16,13 @@ export const up = (pgm) => {
     },
     item_id: {
       type: "integer",
+      notNull: true,
       references: "items(id)",
       onDelete: "CASCADE",
     },
     class_id: {
       type: "integer",
+      notNull: true,
       references: "classes(id)",
       onDelete: "CASCADE",
     },

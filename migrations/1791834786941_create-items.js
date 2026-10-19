@@ -17,6 +17,7 @@ export const up = (pgm) => {
     name: {
       type: "varchar(100)",
       notNull: true,
+      unique: true,
     },
     description: {
       type: "text",

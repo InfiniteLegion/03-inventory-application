@@ -3,6 +3,7 @@ const path = require("node:path");
 const indexRouter = require("./routes/indexRouter.js");
 const categoriesRouter = require("./routes/categoriesRouter.js");
 const classesRouter = require("./routes/classesRouter.js");
+const itemsRouter = require("./routes/itemsRouter.js");
 
 const app = express();
 const cssPath = path.join(__dirname, "public");
@@ -16,6 +17,7 @@ app.set("view engine", "ejs");
 app.use("/", indexRouter);
 app.use("/categories", categoriesRouter);
 app.use("/classes", classesRouter);
+app.use("/items", itemsRouter);
 
 const PORT = 3000;
 

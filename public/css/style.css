@@ -7,6 +7,16 @@
   --info: #0dcaf0;
   --light: #f8f9fa;
   --dark: #212529;
+
+  --druid: #8b5a2b;
+  --shaman: #1f6fd1;
+  --rogue: #7d8590;
+  --warrior: #c0392b;
+  --paladin: #e8b923;
+  --priest: #d0d5dd;
+  --mage: #3fc7eb;
+  --hunter: #4caf50;
+  --warlock: #7b3fa0;
 }
 
 * {
@@ -48,6 +58,14 @@ nav {
   font-size: 1.2em;
 }
 
+footer {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  color: #000;
+}
+
 .control-panel {
   padding: 10px 50px;
 }
@@ -81,6 +99,7 @@ nav {
   padding: 10px 0;
 }
 
+.input-block select,
 .input-block input {
   font-size: 17px;
   border: 2px solid black;
@@ -88,6 +107,7 @@ nav {
   padding: 5px 10px;
 }
 
+.input-block select:focus,
 .input-block input:focus {
   outline: none;
   border: 2px solid #3363bd;
@@ -211,10 +231,122 @@ tbody tr:nth-child(odd) {
   padding-top: 50px;
 }
 
-footer {
+/* items */
+
+.items-wrapper {
   width: 100%;
-  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  padding: 40px 0;
+}
+
+.item {
   display: flex;
-  justify-content: center;
-  color: #000;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: whitesmoke;
+}
+
+.item-title {
+  font-size: 1.25em;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.item-category {
+  font-size: 0.85em;
+  font-weight: 300;
+  color: var(--secondary);
+}
+
+.item-price {
+  color: goldenrod;
+  font-weight: 600;
+}
+
+.item-classes {
+  display: flex;
+  gap: 5px;
+}
+
+.checkbox-block {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.item-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.item-class {
+  cursor: pointer;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 3px;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.input-error {
+  color: red;
+  font-size: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+.druid {
+  color: var(--druid);
+  border-color: var(--druid);
+}
+
+.shaman {
+  color: var(--shaman);
+  border-color: var(--shaman);
+}
+
+.rogue {
+  color: var(--rogue);
+  border-color: var(--rogue);
+}
+
+.warrior {
+  color: var(--warrior);
+  border-color: var(--warrior);
+}
+
+.paladin {
+  color: var(--paladin);
+  border-color: var(--paladin);
+}
+
+.priest {
+  color: var(--priest);
+  border-color: var(--priest);
+}
+
+.mage {
+  color: var(--mage);
+  border-color: var(--mage);
+}
+
+.hunter {
+  color: var(--hunter);
+  border-color: var(--hunter);
+}
+
+.warlock {
+  color: var(--warlock);
+  border-color: var(--warlock);
 }

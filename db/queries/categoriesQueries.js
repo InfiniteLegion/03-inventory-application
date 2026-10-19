@@ -5,6 +5,13 @@ const getAllCategories = async () => {
   return rows;
 };
 
+const getCategoryById = async (id) => {
+  const { rows } = await pool.query("SELECT * FROM categories WHERE id = $1", [
+    id,
+  ]);
+  return rows[0];
+};
+
 const addCategory = async (name, description) => {
   await pool.query(
     "INSERT INTO categories (name, description) VALUES ($1, $2)",
@@ -25,6 +32,7 @@ const deleteCategory = async (id) => {
 
 module.exports = {
   getAllCategories,
+  getCategoryById,
   addCategory,
   deleteCategory,
   editCategory,
