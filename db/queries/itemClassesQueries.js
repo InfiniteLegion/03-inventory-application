@@ -8,6 +8,14 @@ const getAllClassesByItemId = async (itemId) => {
   return rows;
 };
 
+const getAllItemClassesByItemId = async (itemId) => {
+  const { rows } = await pool.query(
+    "SELECT * FROM item_classes WHERE item_id = $1",
+    [itemId],
+  );
+  return rows;
+};
+
 const addItemClass = async (itemId, classId, db = pool) => {
   await db.query(
     "INSERT INTO item_classes (item_id, class_id) VALUES ($1, $2)",
@@ -15,8 +23,13 @@ const addItemClass = async (itemId, classId, db = pool) => {
   );
 };
 
-const deleteItemClass = async (id) => {
-  await pool.query("DELETE FROM item_classes WHERE id = $1", [id]);
+const deleteItemClass = async (id, db = pool) => {
+  await db.query("DELETE FROM item_classes WHERE id = $1", [id]);
 };
 
-module.exports = { getAllClassesByItemId, addItemClass, deleteItemClass };
+module.exports = {
+  getAllClassesByItemId,
+  getAllItemClassesByItemId,
+  addItemClass,
+  deleteItemClass,
+};

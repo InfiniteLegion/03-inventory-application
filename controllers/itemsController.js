@@ -75,4 +75,75 @@ const addItem = async (req, res) => {
   }
 };
 
-module.exports = { getAllItems, addItem };
+const editItem = async (req, res) => {
+  const {
+    id,
+    name,
+    description,
+    price,
+    quantity,
+    rarity,
+    category_id,
+    classes,
+  } = req.body;
+
+  try {
+    await itemsDB.editItem(
+      {
+        id: id,
+        name: name,
+        description: description,
+        price: price,
+        quantity: quantity,
+        rarity: rarity,
+        category_id: category_id,
+      },
+      classes,
+    );
+
+    res.redirect("/items");
+  } catch (error) {
+    if (error.code === "23505") {
+      const data = await itemsDB.getAllItems();
+      const items = await Promise.all(
+        data.map(async (i) => ({
+          ...i,
+          category: await categoriesDB.getCategoryById(i.category_id),
+          classes: await itemClassesDB.getAllClassesByItemId(i.id),
+        })),
+      );
+
+      return res.status(409).render("items", {
+        error: `Item "${name}" already exists.`,
+        items: items,
+        classes: await classesDB.getAllClasses(),
+        categories: await categoriesDB.getAllCategories(),
+        formData: {
+          name,
+          description,
+          price,
+          quantity,
+          rarity,
+          category_id,
+          classes,
+        },
+        openEditModal: true,
+      });
+    }
+
+    res.status(500).send(`Internal sever error: ${error.message}`);
+  }
+};
+
+const deleteItem = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    await itemsDB.deleteItem(id);
+    res.redirect("/items");
+  } catch (error) {
+    res.status(500).send(`Internal server error: ${error.message}`);
+  }
+};
+
+module.exports = { getAllItems, addItem, editItem, deleteItem };

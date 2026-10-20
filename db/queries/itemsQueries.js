@@ -42,17 +42,32 @@ const addItem = async (
 
 const editItem = async (body, classes) => {
   const { id, name, description, price, quantity, rarity, category_id } = body;
+  const classIds = classes ? [].concat(classes) : [];
+  const client = await pool.connect();
 
-  await pool.query(
-    "UPDATE items SET name = $1, description = $2, price = $3, quantity = $4, rarity = $5, category_id = $6 WHERE id = $7",
-    [name, description, price, quantity, rarity, category_id, id],
-  );
+  try {
+    await pool.query(
+      "UPDATE items SET name = $1, description = $2, price = $3, quantity = $4, rarity = $5, category_id = $6 WHERE id = $7",
+      [name, description, price, quantity, rarity, category_id, id],
+    );
 
-  // const { rows } = await itemClassesDB.getAllClassesByItemId(id);
-  //
-  // await Promise.all(rows.map((r) => itemClassesDB.deleteItemClass(r.id)));
-  //
-  // await Promise.all(classes.map((c) => itemClassesDB.addItemClass(id, c.id)));
+    const oldItemClasses = await itemClassesDB.getAllItemClassesByItemId(id);
+
+    for (const i of oldItemClasses) {
+      await itemClassesDB.deleteItemClass(i.id, client);
+    }
+
+    for (const classId of classIds) {
+      await itemClassesDB.addItemClass(id, classId, client);
+    }
+
+    await client.query("COMMIT");
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 };
 
 const deleteItem = async (id) => {

@@ -8,22 +8,42 @@ btnCloseAdd.addEventListener("click", () => {
 document.getElementById("btn-add").addEventListener("click", (e) => {
   e.preventDefault();
 
-  if (validateFormData()) {
+  if (validateFormData("add")) {
     formAdd.submit();
   } else {
     return;
   }
 });
 
-const validateFormData = () => {
-  const name = document.getElementById("item-name");
-  const price = document.getElementById("item-price").value;
-  const quantity = document.getElementById("item-quantity").value;
-  const classes = document.querySelectorAll('input[name="classes"]');
-  const nameError = document.getElementById("error-name");
-  const priceError = document.getElementById("error-price");
-  const quantityError = document.getElementById("error-quantity");
-  const classesError = document.getElementById("error-classes");
+const editBtnHandler = (e, id) => {
+  e.preventDefault();
+
+  const formEdit = document.getElementById(`form-edit-item-${id}`);
+
+  if (validateFormData("edit", id)) {
+    formEdit.submit();
+  } else {
+    return;
+  }
+};
+
+const validateFormData = (prefix, id = null) => {
+  const suffix = id !== null ? `-${id}` : "";
+  const form = document.getElementById(`form-${prefix}-item${suffix}`);
+  const name = document.getElementById(`${prefix}-item-name${suffix}`);
+  const price = document.getElementById(`${prefix}-item-price${suffix}`).value;
+  const quantity = document.getElementById(
+    `${prefix}-item-quantity${suffix}`,
+  ).value;
+  const classes = form.querySelectorAll('input[name="classes"]');
+  const nameError = document.getElementById(`${prefix}-error-name${suffix}`);
+  const priceError = document.getElementById(`${prefix}-error-price${suffix}`);
+  const quantityError = document.getElementById(
+    `${prefix}-error-quantity${suffix}`,
+  );
+  const classesError = document.getElementById(
+    `${prefix}-error-classes${suffix}`,
+  );
   let ok = true;
 
   if (name.value.trim().length === 0) {

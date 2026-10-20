@@ -1,0 +1,19 @@
+<div class="item-control-panel">
+    <div>
+        <i class="mdi mdi-pencil table-ctrl-icon icon-edit" title="Edit">
+            <button type="button" command="show-modal" commandfor="edit-item-modal-<%= item.id %>" class="table-ctrl-btn"></button>
+        </i>
+
+        <%- include('modalEditItem', {item: item, classes: classes, categories: categories, iClasses: itemClasses })%>
+    </div>
+
+    <div>
+        <form action="/items/delete" method="post">
+            <input type="hidden" name="id" value="<%= item.id %>">
+
+            <i class="mdi mdi-delete table-ctrl-icon icon-delete" title="Delete">
+                <button class="table-ctrl-btn"></button>
+            </i>
+        </form>
+    </div>
+</div>

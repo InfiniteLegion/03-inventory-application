@@ -17,7 +17,7 @@
 
         <div class="items-wrapper">
             <% items.forEach((item) => { %>
-                <%- include('itemCard', { item: item } ) %>
+                <%- include('itemCard', { item: item, classes: classes, categories: categories } ) %>
             <% }); %>
         </div>
     </div>

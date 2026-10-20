@@ -350,3 +350,9 @@ tbody tr:nth-child(odd) {
   color: var(--warlock);
   border-color: var(--warlock);
 }
+
+.item-control-panel {
+  padding: 5px 0;
+  display: flex;
+  gap: 5px;
+}

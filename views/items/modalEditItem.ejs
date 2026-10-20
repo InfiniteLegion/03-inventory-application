@@ -1,0 +1,95 @@
+<% const rarityArr = ['common', 'uncommon', 'rare', 'epic', 'legendary']; %>
+<% const itemClasses = (locals.iClasses ? [].concat(iClasses) : []).map((c) => String(c.id)); %>
+<% const selectedClasses = locals.formData && formData.classes ? [].concat(formData.classes).map(String) : []; %>
+<% const checkedIds = locals.formData ? selectedClasses : itemClasses; %>
+
+<dialog id="edit-item-modal-<%= item.id %>" class="modal-form">
+    <h2>Edit item</h2>
+
+    <form action="/items/edit" method="post" id="form-edit-item-<%= item.id %>">
+        <% if (locals.error) { %>
+            <p class="form-error"><%= error %></p>
+        <% } %>
+
+        <input type="hidden" name="id" value="<%= item.id %>">
+
+        <div class="input-block">
+            <label for="edit-item-name-<%= item.id %>">Name</label>
+            <input type="text" name="name" id="edit-item-name-<%= item.id %>" required
+                value="<%= locals.formData ? formData.name : item.name %>">
+            <p class="input-error hidden" id="edit-error-name-<%= item.id %>"></p>
+        </div>
+
+        <div class="input-block">
+            <label for="edit-item-category-<%= item.id %>">Category</label>
+            <select name="category_id" id="edit-item-category-<%= item.id %>">
+                <% categories.forEach((category) => { %>
+                    <option value="<%= category.id %>"
+                        <%= (locals.formData && Number(formData.category_id) === Number(category.id)) || Number(category.id) === Number(item.category_id) ? 'selected' : '' %>>
+                        <%= category.name %>
+                    </option>
+                <% }); %>
+            </select>
+            <p class="input-error hidden" id="edit-error-category-<%= item.id %>"></p>
+        </div>
+
+        <div class="input-block">
+            <label for="edit-item-price-<%= item.id %>">Price</label>
+            <input type="number" name="price" min="0" id="edit-item-price-<%= item.id %>"
+                value="<%= locals.formData ? formData.price : item.price %>">
+            <p class="input-error hidden" id="edit-error-price-<%= item.id %>"></p>
+        </div>
+
+        <div class="input-block">
+            <label for="edit-item-quantity-<%= item.id %>">Quantity</label>
+            <input type="number" name="quantity" min="0" id="edit-item-quantity-<%= item.id %>"
+                value="<%= locals.formData ? formData.quantity : item.quantity %>">
+            <p class="input-error hidden" id="edit-error-quantity-<%= item.id %>"></p>
+        </div>
+
+        <div class="input-block">
+            <label for="edit-item-rarity-<%= item.id %>">Rarity</label>
+            <select name="rarity" id="edit-item-rarity-<%= item.id %>">
+                <% rarityArr.forEach((r) => { %>
+                    <option value="<%= r %>"
+                        <%= (locals.formData && formData.rarity === r) || item.rarity === r ? 'selected' : ''%>>
+                        <%= r %>
+                    </option>
+                <% }); %>
+            </select>
+            <p class="input-error hidden" id="edit-error-rarity-<%= item.id %>"></p>
+        </div>
+
+        <div class="input-block">
+            <div class="checkbox-block">
+                <% classes.forEach((c) => { %>
+                    <div class="item-checkbox">
+                        <input type="checkbox" name="classes" id="edit-item-class-<%= item.id %>-<%= c.id %>" value="<%= c.id %>"
+                            <%= checkedIds.includes(String(c.id)) ? 'checked' : '' %>>
+                        <label for="edit-item-class-<%= item.id %>-<%= c.id %>"><%= c.name %></label>
+                    </div>
+                <% });%>
+            </div>
+            <p class="input-error hidden" id="edit-error-classes-<%= item.id %>"></p>
+        </div>
+
+        <div class="input-block">
+            <label for="edit-item-description">Description</label>
+            <input type="text" name="description" id="edit-item-description"
+                value="<%= locals.formData ? formData.description : item.description %>">
+            <p class="input-error hidden" id="edit-error-description-<%= item.id %>"></p>
+        </div>
+
+        <div class="modal-btn-block">
+            <button type="submit" onclick="editBtnHandler(event, <%= item.id %>)" class="modal-btn-edit" id="btn-edit">Edit</button>
+            <button type="button" class="modal-btn-close" id="modal-btn-close-edit-item" command="close"
+                commandfor="edit-item-modal-<%= item.id %>">Close</button>
+        </div>
+    </form>
+
+    <% if (locals.openEditModal) { %>
+        <script>
+            document.getElementById("edit-item-modal-<%= item.id %>").showModal();
+        </script>
+    <% } %>
+</dialog>
